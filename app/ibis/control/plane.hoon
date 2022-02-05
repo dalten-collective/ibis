@@ -67,7 +67,8 @@
         ::
         ::  display stands
         ::
-        ;*  (~(rep by catch) make-stand)
+        ;*  ;=  (~(rep by catch) make-stand)
+            ==
         ::
         ::  new stand entry form
         ::
@@ -87,7 +88,7 @@
       ;div(class "stand-internals")
         ;div(class "res-wrapper")
           ;div(class "res-itself")
-            ;p:"{<entity.res>} {(trip (scot %tas name.res))} \/"
+            ;p:"{<entity.res>} {(trip (scot %tas name.res))} \\/"
           ==
         ==
         ;div(class "parappa-wrapper")
@@ -148,7 +149,7 @@
   ::  the user action, +argue may produce a $brief, which is simply
   ::  a ?(~ @t), containing an optional error message.
   ::
-  ^-  $@(brief:rudder action)
+  ^-  $@(brief:rudder wade)
   ::  retrieving arguments from the body, in the simple form data case,
   ::  is made trivial by +frisk.
   ::
@@ -156,7 +157,7 @@
     ?~(body ~ (frisk:rudder q.u.body))
   ::  for valid requests, we produce the appropriate action.
   ::
-  ?:  (~(has by args) 'add') (~(has by args) 'standin'))
+  ?:  |((~(has by args) 'add') (~(has by args) 'standin'))
     :: a successful brief
     [%add ~]
   :: a brief containing a cord

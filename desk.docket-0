@@ -1,0 +1,10 @@
+:~  title+''
+    info+'Sharing Beauty Today'
+    color+0xdc.d7d2
+    image+'https://ipfs.io/ipfs/Qmbf9rrQw3er44zeS8qSRShPpZiEsbVZNXPyR7CNXqoMCF'
+    site+/apps/ibis
+    base+'ibis'
+    version+[0 0 1]
+    website+'https://dalten.org/'
+    license+'Get Rekt'
+==
