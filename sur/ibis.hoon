@@ -26,6 +26,7 @@
       [%tint res=resource bak=@ux]
       [%feed res=resource ~]
       [%jump res=resource ~]
+      fish
       [%add ~]
   ==
 ::

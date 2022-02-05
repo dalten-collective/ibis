@@ -7,8 +7,8 @@
 ::  ibis provides a control plane that allows the proprietor to see their 
 /-  *ibis, store=graph-store, *resource
 /+  default-agent, dbug, rudder, server
-/~  plane  (page:rudder state-zero wade)  /app/ibis/control
-/~  drone  (page:rudder state-zero fish)  /app/ibis/gallery
+/~  pages  (page:rudder state-zero wade)  /app/ibis
+::
 |%
 +$  versioned-state
   $%  state-0
@@ -54,7 +54,7 @@
   =+  cards=*(list card)
   =?    cards
       =+  kez=(~(get by wex.bowl) [/ibis/graph/keys our.bowl %graph-store])
-      ?~(kez %.y !(-.u.kez))
+      ?~(kez %.y !-.u.kez)
     :_  cards
     [%pass /ibis/graph/keys %agent [our.bowl %graph-store] %watch [%keys ~]]
   [cards this(state old)]
@@ -64,96 +64,37 @@
   ^-  (quip card _this)
   ?+    mark  `this
       %handle-http-request
-    ::  we don't want to expose wade to the general public
-    ::  nor fish to the admin, so we first differentiate based
-    ::  on request and then do the rudder behaviors.
-    =+  htp=!<([=eyre-id =inbound-request:eyre] vase)
-    =/  perm=[[ext=(unit @ta) sav=(list @t)] args=(list [key=@t value=@t])]
-      (parse-request-line:server url.request.inbound-request.htp)
-    ?:  ?|  ?=([%apps %ibis ~] sav.perm)
-            ?=([%apps %ibis %$ ~] sav.perm)
-            ?=([%apps %ibis %index ~] sav.perm)
-        ==
-      ::
-      ::  admin - look for gallery for the if-false case
-      ::
-      =;  out=(quip card _flock)
-        [-.out this(state [%0 +.out])]
-      %.  [bowl !<(order:rudder vase) state-zero]
-      %:  (steer:rudder state-zero wade)
-        plane
-      ::
-        |=  =trail:rudder
-        ^-  (unit place:rudder)
-        ?~  site=(decap:rudder /apps/ibis site.trail)
-          ~
-        ?+  u.site  ~
-          ~           `[%page & %plane]
-          [%index ~]  `[%away (snip site.trail)]
-        ==
-      ::
-        |=  =order:rudder
-        ^-  [[(unit reply:rudder) (list card)] state-zero]
-        =;  msg=@t  [[`[%code 404 msg] ~] +.state]
-        %+  rap  3
-        :~  'ibis page '  url.request.order  ' not found ~'   ==
-      ::
-        |=  wad=wade
-        ^-  $@(@t [brief:rudder (list card) state-zero])
-        'error'
-        ::?-  -.wad
-        ::  %nest  [~ ~ [pools catch flock]]::``+>:(nest:thoth:hc +.wadi)
-        ::  %move  [~ ~ [pools catch flock]]::``+>:(move:thoth:hc +.wadi)
-        ::  %tint  [~ ~ [pools catch flock]]::``+>:(tint:thoth:hc +.wadi)
-        ::  %feed  [~ ~ [pools catch flock]]::``+>:(feed:thoth:hc +.wadi)
-        ::  %jump  [~ ~ [pools catch flock]]::``+>:(jump:thoth:hc +.wadi)
-        ::  %add   [~ ~ [pools catch flock]]::``+.state
-        ::==
-      ==
-    ::
-    ::  gallery - the second half from admin above
-    ::
-    ?>  ?=([%apps %ibis @ @ *] sav.perm)
-    =/  ext=[@ @ p=@t q=@t *]  sav.perm
     =;  out=(quip card state-zero)
       [-.out this(state [%0 +.out])]
-    %.  [bowl !<(order:rudder vase) state-zero]
-    %:  (steer:rudder state-zero fish)
-      drone
+    %.  [bowl !<(order:rudder vase) +.state]
+    %:  (steer:rudder state-zero wade)
+      pages
     ::
       |=  =trail:rudder
       ^-  (unit place:rudder)
-      ::
-      ?~  site=(decap:rudder /apps/ibis)
-        ~
+      ?~  site=(decap:rudder /apps/ibis site.trail)  ~
       ?+  u.site  ~
-        [@ @ ~]         `[%page | %drone]
-        [@ @ %$ ~]      `[%away (snip site.trail)]
-        [@ @ %index ~]  `[%away (snip site.trail)]
+        ~           `[%page & %control-plane]
+        [%$ ~]      `[%away /apps/ibis]
+        [%index ~]  `[%away (snip site.trail)]
+      ::
+        [@ @ ~]     `[%page | %display-drone]
+        [@ @ %$ ~]   `[%away (snip site.trail)]
       ==
     ::
       |=  =order:rudder
       ^-  [[(unit reply:rudder) (list card)] state-zero]
       =;  msg=@t  [[`[%code 404 msg] ~] +.state]
-      %+  rap  3
-      ['ibis page ' (url.request.order) ' not found ~' ~]
+      (rap 3 ~['ibis page' url.request.order 'not found'])
     ::
-      |=  tad=fish
+      |=  act=wade
       ^-  $@(@t [brief:rudder (list card) state-zero])
-      ?-    -.tad
-          %love
-        ?>  (~(has by catch) [(slav %p p.ext) (slav %p q.ext)])
-        =/  poast=(map index:store [url=@t luv=@ud])
-          %-  my
-          ~(tap in (~(got by catch) [(slav %p p.ext) (slav %p q.ext)]))
-        ?>  (~(has by poast) ind.tad)
-        =/  prior=[url=@t luv=@ud]
-          (~(got by poast) ind.tad)
-        =-  ``[pools catch -]
-        %+  ~(put ju flock)  [(slav %p p.ext) (slav %p q.ext)]
-        [ind.tad url.prior +(luv.prior)]
+      ?+  -.act  ``+>:(thoth:hc act)
+        %love  ``+.state
+        %add   ``+.state
       ==
     ==
+    
   ::
       %ibis-wade
     ?>  (team:title our.bowl src.bowl)
@@ -175,15 +116,14 @@
         %graph-update-3
       =/  upd=update:store  !<(update:store q.cage.sign)
       ?>  ?=(%keys -.q.upd)
-      =.  pools
-        (~(rep in resources.q.upd) brood)
+      =.  pools  (~(rep in resources.q.upd) brood:hc)
       `this
     ==
   ::
       %poke-ack
     ~&  >  [%ibis %got %poke-ack ~]
-    ~&  >>  wire
-    ~&  >>  sign
+    ~&  >>  wire  ::EO dbug
+    ~&  >>  sign  ::EO dbug
     `this
   ::
       %watch-ack
@@ -242,6 +182,7 @@
     %tint  (tint +.wadi)
     %feed  (feed +.wadi)
     %jump  (jump +.wadi)
+    %love  `state
     %add   `state
   ==
   ::

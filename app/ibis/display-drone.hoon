@@ -4,7 +4,7 @@
 /-  *ibis
 /+  rudder
 ::
-^-  (page:rudder state-zero fish)
+^-  (page:rudder state-zero wade)
 ::
 |_  $:  bol=bowl:gall
         odo=order:rudder
@@ -149,7 +149,7 @@
   ::  the user action, +argue may produce a $brief, which is simply
   ::  a ?(~ @t), containing an optional error message.
   ::
-  ^-  $@(brief:rudder fish)
+  ^-  $@(brief:rudder wade)
   ::  retrieving arguments from the body, in the simple form data case,
   ::  is made trivial by +frisk.
   ::
@@ -159,7 +159,7 @@
   ::
   ?:  |((~(has by args) 'add') (~(has by args) 'standin'))
     :: a successful brief
-    [%love ~]
+    [%add ~]
   :: a brief containing a cord
   'fail - this is a brief containing a cord'
 ::  +final gets called after a POST request has been processed.
