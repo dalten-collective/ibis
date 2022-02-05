@@ -67,8 +67,11 @@
         ::
         ::  display stands
         ::
-        ;*  ;=  (~(rep by catch) make-stand)
-            ==
+        ;*  ?.  ?=(~ catch.sat)
+              ;=  ;div;
+                  ;div;
+              ==
+            (~(rep by catch.sat) make-stand)
         ::
         ::  new stand entry form
         ::
@@ -82,39 +85,40 @@
     ==
   ::
   ++  make-stand
-    |=  [[res=resource pat=path bak=@ux pub=?] out=marl]
+    |=  [[res=resource [pat=path bak=@ux pub=?]] out=(list manx)]
     :_  out
-    ;div(class "stand-row")
-      ;div(class "stand-internals")
-        ;div(class "res-wrapper")
-          ;div(class "res-itself")
-            ;p:"{<entity.res>} {(trip (scot %tas name.res))} \\/"
-          ==
-        ==
-        ;div(class "parappa-wrapper")
-          ;div(class "parappa-itself")
-            ;p:"{<pat>}"
-          ==
-        ==
-        ;div(class "color-wrapper")
-          ;div(class "color-itself")
-            ;p:"{<bak>}"
-          ==
-        ==
-        ;div(class "feed-wrapper")
-          ;div(class "feed-itself")
-            ;p:"{<(trip (scot %ux bak))>}"
-          ==
-        ==
-        ;div(class "jump-wrapper")
-          ;div(class "jump-itself")
-            ;+  ?:  pub
-                  ;p:"Public"
-                ;p:"Private"
-          ==
-        ==
-      ==
-    ==
+    ;div;
+    ::;div(class "stand-row")
+    ::  ;div(class "stand-internals")
+    ::    ;div(class "res-wrapper")
+    ::      ;div(class "res-itself")
+    ::        ;p:"{<entity.res>} {(trip (scot %tas name.res))} \\/"
+    ::      ==
+    ::    ==
+    ::    ;div(class "parappa-wrapper")
+    ::      ;div(class "parappa-itself")
+    ::        ;p:"{<pat>}"
+    ::      ==
+    ::    ==
+    ::    ;div(class "color-wrapper")
+    ::      ;div(class "color-itself")
+    ::        ;p:"{<bak>}"
+    ::      ==
+    ::    ==
+    ::    ;div(class "feed-wrapper")
+    ::      ;div(class "feed-itself")
+    ::        ;p:"{<(trip (scot %ux bak))>}"
+    ::      ==
+    ::    ==
+    ::    ;div(class "jump-wrapper")
+    ::      ;div(class "jump-itself")
+    ::        ;+  ?:  pub
+    ::              ;p:"Public"
+    ::            ;p:"Private"
+    ::      ==
+    ::    ==
+    ::  ==
+    ::==
   ::
   ++  style
     '''
