@@ -91,7 +91,6 @@
       ^-  $@(@t [brief:rudder (list card) state-zero])
       ?+  -.act  ``+>:(thoth:hc act)
         %love  ``+.state
-        %add   ``+.state
       ==
     ==
     
@@ -181,7 +180,6 @@
     %feed  (feed +.wadi)
     %jump  (jump +.wadi)
     %love  `state
-    %add   `state
   ==
   ::
   ++  nest
