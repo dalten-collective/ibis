@@ -70,7 +70,6 @@
       ~(tap by (update-log:store .^(* %gx pat)))
     =/  cog=(map time @t)
       (roll log frames)
-    ~&  >>>  cog
     %-  ~(rep by cog)
     |=  [[tim=time url=@t] out=marl]
     :_  out
@@ -85,17 +84,16 @@
         =/  vangogh=(map time @t)  (~(rep by nodes.q.lup) murmur)
         (~(uni by out) vangogh)
       ::
-      ::    %remove-posts
-      ::  ~&  >  indices.q.lup
-      ::  =/  gauguin=(list index:store)  ~(tap in indices.q.lup)
-      ::  |-
-      ::  ?~  gauguin
-      ::    out
-      ::  %+  roll  i.gauguin
-      ::  |=  [@ (map time @t)]
-      ::  ?.  (~(has by out) `time`+<-)
-      ::    out
-      ::  (~(del by out) `time`+<-)
+          %remove-posts
+        =/  gauguin=(list index:store)  ~(tap in indices.q.lup)
+        |-
+        ?~  gauguin
+          out
+        %+  roll  i.gauguin
+        |=  [@ (map time @t)]
+        ?.  (~(has by out) `time`+<-)
+          out
+        (~(del by out) `time`+<-)
       ==
     ::
     ++  murmur
@@ -106,7 +104,6 @@
       =/  warhol=(list content:store)  contents.tomato
       |-
       ?:  |(?=(~ ind) ?=(~ warhol))
-        ~&  >>  "I left because warhol was empty"
         out
       ?+    -.i.warhol  %=  $
                           ind     ?~(t.ind ind t.ind)
@@ -114,7 +111,6 @@
                         ==
       ::
           %url
-        ~&  >>  ["I'm adding a url " (~(put by out) i.ind url.i.warhol)]
         %=  $
           out     (~(put by out) i.ind url.i.warhol)
           ind     ?~(t.ind ind t.ind)

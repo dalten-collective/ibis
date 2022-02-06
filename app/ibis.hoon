@@ -37,7 +37,7 @@
 ::
 ++  on-init
   ^-  (quip card _this)
-  ~&  >  [%expo %start ~]
+  ~&  >  [%ibis %start ~]
   =+  [[~ [%apps %ibis ~]] dap.bowl]
   :_  this
   :~  [%pass /eyre/connect %arvo %e %connect -]
@@ -120,15 +120,15 @@
     ==
   ::
       %poke-ack
-    ~&  >  [%ibis %got %poke-ack ~]
-    ~&  >>  wire  ::EO dbug
-    ~&  >>  sign  ::EO dbug
+    ::~&  >  [%ibis %got %poke-ack ~]
+    ::~&  >>  wire  ::EO dbug
+    ::~&  >>  sign  ::EO dbug
     `this
   ::
       %watch-ack
-    ~&  >  [%ibis %got %watch-ack ~]
-    ~&  >>  wire
-    ~&  >>  sign
+    ::~&  >  [%ibis %got %watch-ack ~]
+    ::~&  >>  wire
+    ::~&  >>  sign
     `this
   ==
 ++  on-watch
@@ -146,10 +146,6 @@
 ::
 |_  bol=bowl:gall
 ::
-++  switch-leg
-  |=  [[res=resource pat=path bak=@ux pub=?] out=(map path resource)]
-  (~(put by out) pat res)
-::
 ++  brood
   |=  [res=resource out=(set resource)]
   =/  pat=path
@@ -163,13 +159,6 @@
   ?.  ?=(%graph-validator-link u.murk)
     out
   (~(put in out) res)
-::
-++  preen
-  |_  pat=(map path resource)
-  ++  plumage
-    |=  [pat=path out=(unit place:rudder)]
-    ~
-  --
 ::
 ++  thoth
   |=  wadi=wade
