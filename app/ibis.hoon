@@ -79,13 +79,13 @@
         [%index ~]  `[%away (snip site.trail)]
       ::
         [@ @ ~]     `[%page | %display-drone]
-        [@ @ %$ ~]   `[%away (snip site.trail)]
+        [@ @ %$ ~]  `[%away (snip site.trail)]
       ==
     ::
       |=  =order:rudder
       ^-  [[(unit reply:rudder) (list card)] state-zero]
       =;  msg=@t  [[`[%code 404 msg] ~] +.state]
-      (rap 3 ~['ibis page' url.request.order 'not found'])
+      (rap 3 ~['ibis page' url.request.order ' not found'])
     ::
       |=  act=wade
       ^-  $@(@t [brief:rudder (list card) state-zero])
@@ -137,7 +137,6 @@
   ^-  (quip card _this)
   ?+  path  (on-watch:def path)
       [%http-response *]
-    ~&  >>  "I just handled an http-response"  ::EO debug
     `this
   ==
 ++  on-arvo   on-arvo:def
@@ -178,7 +177,6 @@
   |^
   ?-  -.wadi
     %nest  (nest +.wadi)
-    %move  (move +.wadi)
     %tint  (tint +.wadi)
     %feed  (feed +.wadi)
     %jump  (jump +.wadi)
@@ -187,30 +185,21 @@
   ==
   ::
   ++  nest
-    |=  [res=resource pat=path bak=@ux pub=?]
+    |=  [res=resource bak=@ux pub=?]
     ?:  (~(has by catch) res)
       ~&  >>>  [%ibis %error ~]
       ~&  >>>  [%resource %already %assigned ~]
       `state
-    `state(catch (~(put by catch) res [pat bak pub]))
-  ::
-  ++  move
-    |=  [res=resource pat=path]
-    ?.  (~(has by catch) res)
-      ~&  >>>  [%ibis %error ~]
-      ~&  >>>  [%no %associations %for (scot %p entity.res) name.res]
-      `state
-    =+  (~(got by catch) res)
-    `state(catch (~(put by catch) res [pat bak.- pub.-]))
+    `state(catch (~(put by catch) res [bak pub]))
   ::
   ++  tint
-    |=  [res=resource bak=@ux]
+    |=  [res=resource bok=@ux]
     ?.  (~(has by catch) res)
       ~&  >>>  [%ibis %error ~]
       ~&  >>>  [%no %associations %for (scot %p entity.res) name.res]
       `state
     =+  (~(got by catch) res)
-    `state(catch (~(put by catch) res [pat.- bak pub.-]))
+    `state(catch (~(put by catch) res [bok pub.-]))
   ::
   ++  feed
     |=  [res=resource ~]
@@ -219,7 +208,7 @@
       ~&  >>>  [%no %associations %for (scot %p entity.res) name.res]
       `state
     =+  (~(got by catch) res)
-    `state(catch (~(put by catch) res [pat.- bak.- !pub.-]))
+    `state(catch (~(put by catch) res [bak.- !pub.-]))
   ::
   ++  jump
     |=  [res=resource ~]

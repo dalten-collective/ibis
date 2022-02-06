@@ -15,14 +15,13 @@
 ::  state items
 ::
 +$  pools  (set resource)
-+$  catch  (map resource [pat=path bak=@ux pub=?])
++$  catch  (map resource [bak=@ux pub=?])
 +$  flock  (jug resource [ind=index:store [url=@t luv=@ud]])
 ::
 ::  actions
 ::
 +$  wade
-  $%  [%nest res=resource pat=path bak=@ux pub=?]
-      [%move res=resource pat=path]
+  $%  [%nest res=resource bak=@ux pub=?]
       [%tint res=resource bak=@ux]
       [%feed res=resource ~]
       [%jump res=resource ~]
