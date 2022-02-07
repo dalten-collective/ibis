@@ -67,7 +67,6 @@
           %update-log  (scot %p entity.res)  (scot %tas name.res)
           %noun
       ==
-    ~&  >  (update-log:store .^(* %gx pat))
     =/  log=(list [time logged-update:store])
       ~(tap by (update-log:store .^(* %gx pat)))
     =/  cog=(map time @t)
@@ -76,7 +75,9 @@
     |=  [[tim=time url=@t] out=marl]
     :_  out
     ;div(class "frame", id "frame-{(scow %da tim)}")
-      ;img(src (trip url), alt "{(scow %tas name.res)}-{(scow %da tim)}");
+      ;img
+        =src  (trip url)
+        =alt  "{(scow %tas name.res)}-{(scow %da tim)}";
     ==
     ::
     ++  frames
@@ -124,7 +125,6 @@
     ++  murmur
       |=  [[ind=index:store nod=node:store] out=(map time @t)]
       ?.  ?=(%.y -.post.nod)
-        ~&  >  out
         out
       =/  tomato=post:store  p.post.nod
       =/  warhol=(list content:store)  contents.tomato
