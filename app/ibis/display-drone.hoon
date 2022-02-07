@@ -27,13 +27,26 @@
           msg=(unit [gud=? txt=@t])
       ==
   ^-  reply:rudder
-  |^  [%page page]
+  |^  
+  =/  rus=(unit [sap=tape loc=@tas])
+    ?~  site=(decap:rudder /apps/ibis (stab url.request.odo))
+      ~
+    %+  rush  (spat u.site)
+    ;~(pfix fas ;~((glue fas) (star ;~(pose sig alp)) sym))
+  ?~  rus
+    [%code 404 '%ibis error -> 404 - unknown destination page']
+  =/  res=resource
+    [(slav %p (crip ['~' sap.u.rus])) loc.u.rus]
+  ?.  (~(has by catch.sat) res)
+    [%code 404 '%ibis error -> 404 - unknown destination page']
+  [%page (page res)]
   ::
   ++  page
+    |=  res=resource
     ^-  manx
     ;html
       ;head
-        ;title:"%ibis control plane"
+        ;title:"%ibis - {(scow %p -.res)} {(scow %tas +.res)}"
         ;style:"{(trip style)}"
         ;meta(charset "utf-8");
         ;meta
@@ -41,20 +54,7 @@
           =content  "width=device-width, initial-scale=1";
       ==
       ;body
-        ;+  ?~  site=(decap:rudder /apps/ibis (stab url.request.odo))
-              ;p:"%ibis error -> 404 - unknown destination page"
-            =/  rus=(unit [sap=tape loc=@tas])
-              %+  rush  (spat u.site)
-              ;~(pfix fas ;~((glue fas) (star ;~(pose sig alp)) sym))
-            ?~  rus
-              ;p:"%ibis error -> 404 - unknown destination page"
-            =/  res=resource
-              [(slav %p (crip ['~' sap.u.rus])) loc.u.rus]
-            ?.  (~(has by catch.sat) res)
-              ;p:"%ibis error -> 404 - unknown destination page"
-            ;div(class "gallery")
-              ;*  `marl`(halls res)
-            ==
+        ;*  `marl`(halls res)
       ==
     ==
   ::
