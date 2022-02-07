@@ -28,6 +28,7 @@
       ==
   ^-  reply:rudder
   |^  [%page page]
+  ::
   ++  page
     ^-  manx
     ;html
@@ -66,6 +67,7 @@
           %update-log  (scot %p entity.res)  (scot %tas name.res)
           %noun
       ==
+    ~&  >  (update-log:store .^(* %gx pat))
     =/  log=(list [time logged-update:store])
       ~(tap by (update-log:store .^(* %gx pat)))
     =/  cog=(map time @t)
@@ -84,6 +86,29 @@
         =/  vangogh=(map time @t)  (~(rep by nodes.q.lup) murmur)
         (~(uni by out) vangogh)
       ::
+          %add-graph
+        %-  ~(rep by graph.q.lup)
+        |=  $:  [at=atom no=node:store]
+                out=(map time @t)
+            ==
+        ?.  ?=(%.y -.post.no)
+          out
+        =/  piet=index:store
+          index.p.post.no
+        =/  mondrian=(list content:store)
+          contents.p.post.no
+        |-
+        ?:  |(?=(~ piet) ?=(~ mondrian))
+          out
+        ?+    -.i.mondrian  $(piet ?~(t.piet piet t.piet), mondrian t.mondrian)
+            %url
+          %=  $
+            piet      ?~(t.piet piet t.piet)
+            mondrian  t.mondrian
+            out       (~(put by out) i.piet url.i.mondrian)
+          ==
+        ==
+      ::
           %remove-posts
         =/  gauguin=(list index:store)  ~(tap in indices.q.lup)
         |-
@@ -99,22 +124,19 @@
     ++  murmur
       |=  [[ind=index:store nod=node:store] out=(map time @t)]
       ?.  ?=(%.y -.post.nod)
+        ~&  >  out
         out
       =/  tomato=post:store  p.post.nod
       =/  warhol=(list content:store)  contents.tomato
       |-
       ?:  |(?=(~ ind) ?=(~ warhol))
         out
-      ?+    -.i.warhol  %=  $
-                          ind     ?~(t.ind ind t.ind)
-                          warhol  t.warhol
-                        ==
-      ::
+      ?+    -.i.warhol  $(ind ?~(t.ind ind t.ind), warhol t.warhol)
           %url
         %=  $
-          out     (~(put by out) i.ind url.i.warhol)
-          ind     ?~(t.ind ind t.ind)
           warhol  t.warhol
+          ind     ?~(t.ind ind t.ind)
+          out     (~(put by out) i.ind url.i.warhol)
         ==
       ==
     -- 
