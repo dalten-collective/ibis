@@ -138,7 +138,18 @@
       [%http-response *]
     `this
   ==
-++  on-arvo   on-arvo:def
+++  on-arvo
+  |=  [=wire =sign-arvo]
+  ^-  (quip card _this)
+  ?+    wire  (on-arvo:def wire sign-arvo)
+      [%eyre %connect ~]
+    ?+    sign-arvo  (on-arvo:def wire sign-arvo)
+        [%eyre %bound *]
+      ~?  !accepted.sign-arvo  [dap.bowl [%eyre %bind %fail] binding.sign-arvo]
+      `this
+    ==
+  ==
+
 ++  on-peek   on-peek:def
 ++  on-leave  on-leave:def
 ++  on-fail   on-fail:def

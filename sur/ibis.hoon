@@ -28,7 +28,7 @@
       fish
   ==
 ::
-::  fish - only increment a love :)
+::  fish - front-end behaviors
 ::
 +$  fish
   $%  [%love tim=time]

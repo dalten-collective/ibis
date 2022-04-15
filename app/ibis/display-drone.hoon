@@ -1,5 +1,5 @@
 ::
-::  control plane for ibis
+::  display drone for ibis
 ::
 /-  *ibis, store=graph-store, *resource
 /+  rudder
@@ -26,23 +26,42 @@
   |=  $:  args=(list [k=@t v=@t])
           msg=(unit [gud=? txt=@t])
       ==
+  =/  groe=path  [(scot %p our.bol) %graph-store (scot %da now.bol) ~]
+  =/  mag=(map @t @t)  (malt args)
   ^-  reply:rudder
-  |^  
-  =/  rus=(unit [sap=tape loc=@tas])
-    ?~  site=(decap:rudder /apps/ibis (stab url.request.odo))
-      ~
-    %+  rush  (spat u.site)
-    ;~(pfix fas ;~((glue fas) (star ;~(pose sig alp)) sym))
-  ?~  rus
-    [%code 404 '%ibis error -> 404 - unknown destination page']
-  =/  res=resource
-    [(slav %p (crip ['~' sap.u.rus])) loc.u.rus]
-  ?.  (~(has by catch.sat) res)
-    [%code 404 '%ibis error -> 404 - unknown destination page']
-  [%page (page res)]
+  |^
+  ::  get resource
+  =;  rus=(unit [res=resource start=(unit @da) prior=?])
+    ?~  rus                        [%code 404 '%ibis error -> 404 - unknown destination page']
+    =,  u.rus
+    ?.  (~(has by catch.sat) res)  [%code 418 '%ibis error -> 418 - became teapot']
+    ?.  ?=(~ start.u.rus)
+      [%page (page res u.start.u.rus prior)]
+    =;  fir=(unit time)
+      ?~  fir                      [%code 404 '%ibis error -> 404 - no available poasts']
+      [%page (page res u.fir %.n)]
+    =-  ((unit time) .^(* %gx -))
+    (welp groe [%update-log (scot %p entity.res) (scot %tas name.res) %latest %noun ~])
+    ::
+  ?~  (find "?" (trip url.request.odo))
+    ?~  site=(decap:rudder /apps/ibis (stab url.request.odo))  ~
+    ?+    u.site  ~
+        [@ @ ~]
+      `[[(slav %p -.u.site) (slav %tas +<.u.site)] ~ %.n]
+    ==
+  =-  ?~  p=-  ~ 
+      :-  ~
+      :+  [(slav %p (crip ->+<.u.p)) ->+>.u.p] 
+        (slaw %da `@t`?~(a=(~(get by mag) 'start') ~ u.a))
+      (~(has by mag) 'prior')
+  %+  rush  url.request.odo
+  ;~  pfix  fas
+      ;~  (glue wut)  ;~((glue fas) (star alp) (star alp) (star ;~(pose sig alp)) sym)
+          (star ;~(pose alp tis sig pam dot))
+  ==  ==  
   ::
   ++  page
-    |=  res=resource
+    |=  [res=resource start=time prior=?]
     ^-  manx
     ;html
       ;head
@@ -54,41 +73,71 @@
           =content  "width=device-width, initial-scale=1";
       ==
       ;body
-        ;*  `marl`(halls res)
+        ;*  =/  hall=[boro=marl last=time]  (halls res start)
+            ;=  ;div(class "full-container")
+                  ;=  ;div(class "button-container")
+                        ;=  ;+  ?.  prior  ;button(disabled ""):"< Previous"
+                                ;button
+                                  =value    "back"
+                                  =onclick  "lastPage()"
+                                  < Previous
+                                ==
+                            ;button
+                              =value    "{<last.hall>}"
+                              =onclick  "nextPage()"
+                              Next >
+                            ==
+                        ==
+                      ==
+                      ;div(class "gallery-container")
+                        ;*  boro.hall
+                      ==
+                  ==
+                ==
+                ;script:"{(script last.hall prior)}"
+            ==
       ==
     ==
   ::
   ++  halls
-    |=  res=resource
+    |=  [res=resource pag=time]
     |^
-    ^-  marl
-    =/  pat=path
-      :~  (scot %p our.bol)  %graph-store  (scot %da now.bol)
-          %update-log  (scot %p entity.res)  (scot %tas name.res)
-          %noun
-      ==
-    =/  log=(list [time logged-update:store])
-      ~(tap by (update-log:store .^(* %gx pat)))
-    =/  cog=(map time @t)
-      (roll log frames)
-    %-  ~(rep by cog)
-    |=  [[tim=time url=@t] out=marl]
-    :_  out
+    ^-  [boro=marl last=time]
+    =/  pata=path
+      %+  welp  groe
+      :^  %graph  (scot %p entity.res)  (scot %tas name.res)
+      [%node %index %lone (scot %ud pag) %noun ~]
+    =/  ponn=path
+      %+  welp  groe
+      :^  %graph  (scot %p entity.res)  (scot %tas name.res)
+      [%depth-first (scot %ud 8) (scot %ud pag) %graph-update-3 ~]
+    %-  %~  rep  by
+    %-  ~(uni by (frames .^(update:store %gx pata)))
+    (frames .^(update:store %gx ponn))
+    |=  [[tim=time url=@t] out=[boro=marl last=time]]
+    :_  ?:(|(=(~2000.1.1 last.out) (lth tim last.out)) tim last.out)
+    :_  boro.out
     ;div(class "frame", id "frame-{(scow %da tim)}")
-      ;img
-        =src  (trip url)
-        =alt  "{(scow %tas name.res)}-{(scow %da tim)}";
+      ;div(class "canvas", id "canvas-{(scow %da tim)}")
+        ;img
+          =class  "picture"
+          =src    (trip url)
+          =alt    "{(scow %tas name.res)}-{(scow %da tim)}";
+      ==
     ==
     ::
     ++  frames
-      |=  [[tim=time lup=logged-update:store] out=(map time @t)]
-      ?+  -.q.lup  out
+      |=  [tim=time tac=action:store]
+      ^-  (map time @t)
+      =|  out=(map time @t)
+      ?+  -.tac  out
           %add-nodes  
-        =/  vangogh=(map time @t)  (~(rep by nodes.q.lup) murmur)
+        =/  vangogh=(map time @t)
+          (~(rep by nodes.tac) murmur)
         (~(uni by out) vangogh)
       ::
           %add-graph
-        %-  ~(rep by graph.q.lup)
+        %-  ~(rep by graph.tac)
         |=  $:  [at=atom no=node:store]
                 out=(map time @t)
             ==
@@ -101,7 +150,9 @@
         |-
         ?:  |(?=(~ piet) ?=(~ mondrian))
           out
-        ?+    -.i.mondrian  $(piet ?~(t.piet piet t.piet), mondrian t.mondrian)
+        ?+    -.i.mondrian
+          $(piet ?~(t.piet piet t.piet), mondrian t.mondrian)
+        ::
             %url
           %=  $
             piet      ?~(t.piet piet t.piet)
@@ -111,7 +162,7 @@
         ==
       ::
           %remove-posts
-        =/  gauguin=(list index:store)  ~(tap in indices.q.lup)
+        =/  gauguin=(list index:store)  ~(tap in indices.tac)
         |-
         ?~  gauguin
           out
@@ -131,7 +182,9 @@
       |-
       ?:  |(?=(~ ind) ?=(~ warhol))
         out
-      ?+    -.i.warhol  $(ind ?~(t.ind ind t.ind), warhol t.warhol)
+      ?+    -.i.warhol
+        $(ind ?~(t.ind ind t.ind), warhol t.warhol)
+      ::
           %url
         %=  $
           warhol  t.warhol
@@ -141,15 +194,66 @@
       ==
     -- 
   ::
+  ++  script
+    |=  [a=time b=?]
+    """
+    function nextPage() \{
+      var url = window.location.href;
+      var spl = url.split('?');
+      var par = spl[0].concat({<(trip (rap 3 :~('?start=' (scot %da a) '&prior=' 'yes')))>});
+      console.log(par);
+      window.location = par;
+    }
+
+    function lastPage() \{
+      history.back()
+    }
+    """
   ++  style
     '''
     * { margin: 0.2em; padding: 0.2em; font-family: monospace; }
 
-    /*  gallery  */
+    /*  full  */
+    .full-container {
+      width: 95vw;
+      padding: 15px 0;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+    }
 
+    /*  buttons  */
+    .button-container {
+      width: 90vw;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+    }
+
+    /*  gallery  */
+    .gallery-container {
+      width: 90vw;
+      padding: 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin: 0 auto;
+    }
     .frame {
-      width:   200px;
-      height:  200px;
+      margin-bottom: 10px;
+    }
+    .canvas {
+      text-align: center;
+    }
+    .picture {
+      max-width: 300px;
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+    .luv-multi {
+      position: relative;
     }
     '''
   --
